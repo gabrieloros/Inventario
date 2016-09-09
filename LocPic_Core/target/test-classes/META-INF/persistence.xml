@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+	<persistence-unit name="sis-test-persistence"
+		transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<!-- MAPPED CLASSES -->
+		<class>com.cvtarg.persistence.entities.Systemuseradr</class>
+		<class>com.cvtarg.persistence.entities.Systemuser</class>
+		<class>com.cvtarg.persistence.entities.UserLocation</class>
+		<class>com.cvtarg.persistence.entities.Claim</class>
+		<class>com.cvtarg.persistence.entities.Parameter</class>
+		<class>com.cvtarg.persistence.entities.Company</class>
+		<class>com.cvtarg.persistence.entities.UserClaim</class>
+		<class>com.cvtarg.persistence.entities.Zone</class>
+		<class>com.cvtarg.persistence.entities.UserZoneActivity</class>
+		<class>com.cvtarg.persistence.entities.UserActivity</class>
+		<class>com.cvtarg.persistence.entities.Origin</class>
+		<class>com.cvtarg.persistence.entities.Dependency</class>
+		<class>com.cvtarg.persistence.entities.Subject</class>
+		<class>com.cvtarg.persistence.entities.InputType</class>
+		<class>com.cvtarg.persistence.entities.Cause</class>
+		<class>com.cvtarg.persistence.entities.ClaimUseradrSubstate</class>
+		<class>com.cvtarg.persistence.entities.Substateldr</class>
+		<class>com.cvtarg.persistence.entities.ClaimClosureldr</class>
+		<class>com.cvtarg.persistence.entities.Materialldr</class>
+		<class>com.cvtarg.persistence.entities.WithoutFixingldr</class>
+		
+		<shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
+		<properties>
+	        <property name="hibernate.cache.use_query_cache" value="false"/>
+    	    <property name="hibernate.cache.use_second_level_cache " value="false"/>
+        </properties>
+		
+	</persistence-unit>
+</persistence>

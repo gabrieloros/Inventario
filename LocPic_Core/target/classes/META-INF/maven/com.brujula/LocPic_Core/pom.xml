@@ -1,0 +1,297 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.brujula</groupId>
+	<artifactId>LocPic_Core</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+
+	<name>LocPic_Core</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		<junit.version>4.8.2</junit.version>
+		<log4j.version>1.2.16</log4j.version>
+		<hibernate.version>4.1.9.Final</hibernate.version>
+		<javassist.version>3.12.1.GA</javassist.version>
+		<postgresql.conector.java.version>9.1-901.jdbc4</postgresql.conector.java.version>
+		<tomcat.maven.plugin.version>1.1</tomcat.maven.plugin.version>
+		<maven.compile.plugin.version>2.3.2</maven.compile.plugin.version>
+		<liquibase.propertyFileName>/src/liquibase/liquibase.properties</liquibase.propertyFileName>
+		<properties.filename></properties.filename>
+	</properties>
+
+	<dependencies>
+		<!-- log4j java Logger -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>${log4j.version}</version>
+		</dependency>
+
+		<!-- JUnit java unit test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- PostgreSQL database driver -->
+		<dependency>
+			<groupId>postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>${postgresql.conector.java.version}</version>
+		</dependency>
+
+		<!-- Hibernate framework -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>${javassist.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20140107</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.jackson</groupId>
+			<artifactId>jackson-mapper-asl</artifactId>
+			<version>1.9.13</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
+
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>env-default</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<database.host>192.168.150.90</database.host>
+				<database.schema>gdr_400</database.schema>
+				<database.username>gdr</database.username>
+				<database.password>gdr1324</database.password>
+				<logPersistence.path>c:/log_GDR_LBS.log</logPersistence.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-cont</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>contrast</value>
+				</property>
+			</activation>
+			<properties>
+				<environment.name>cont_</environment.name>
+				<properties.filename>cont_</properties.filename>
+				<logPersistence.path>/var/log/log_GDR_LBS.log</logPersistence.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-int</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>integration</value>
+				</property>
+			</activation>
+			<properties>
+				<environment.name>int_</environment.name>
+				<properties.filename>int_</properties.filename>
+				<logPersistence.path>/data/logs/int_log_GDR_LBS.log</logPersistence.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-qa</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>staging</value>
+				</property>
+			</activation>
+			<properties>
+				<environment.name>qa_</environment.name>
+				<properties.filename>qa_</properties.filename>
+				<logPersistence.path>/data/logs/qa_log_GDR_LBS.log</logPersistence.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-uat</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>uat</value>
+				</property>
+			</activation>
+			<properties>
+				<environment.name>uat_</environment.name>
+				<properties.filename>uat_</properties.filename>
+				<logPersistence.path>/data/logs/uat_log_GDR_LBS.log</logPersistence.path>
+			</properties>
+		</profile>
+		<profile>
+			<id>env-demo</id>
+			<activation>
+				<property>
+					<name>env</name>
+					<value>preproduction</value>
+				</property>
+			</activation>
+			<properties>
+				<environment.name>preproduction_</environment.name>
+				<properties.filename>preproduction_</properties.filename>
+				<logPersistence.path>/data/logs/log_GDR_LBS.log</logPersistence.path>
+			</properties>
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<!-- Ensures we are compiling at 1.7 level -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven.compile.plugin.version}</version>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+
+			<!-- Read file properties by profile -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<configuration>
+					<files>
+						<file>${basedir}/src/test/resources/environment/${properties.filename}environment.properties</file>
+					</files>
+				</configuration>
+				<executions>
+					<!-- Associate the read-project-properties goal with the initialize 
+						phase, to read the properties file. -->
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<!-- copy, replace and filter the required resources -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<!-- replace the persistence.xml for testing purposes -->
+					<execution>
+						<id>test</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/test-classes/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/test/resources/environment</directory>
+									<includes>
+										<include>persistence.properties</include>
+									</includes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-log</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>target/classes/</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/test/resources/environment</directory>
+									<includes>
+										<include>log4j.properties</include>
+									</includes>
+									<filtering>true</filtering>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!-- Read file properties by profile -->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>properties-maven-plugin</artifactId>
+										<versionRange> [1.0-alpha-2,)</versionRange>
+										<goals>
+											<!-- plugin goals -->
+											<goal>read-project-properties</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>
